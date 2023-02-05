@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QRect
-from PyQt5.QtGui import QIcon, QBitmap, QFont
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint, QSize
+from PyQt5.QtGui import QCursor
+import qtawesome as qta
 import sys
-import json
 import math
 
 
@@ -17,13 +17,13 @@ class App(QMainWindow):
         self.windowControl.setLayout(self.windowControlLayout)
 
         self.close_btn = QPushButton(self.menuBar)
-        self.max_btn = QPushButton("", self.menuBar)
-        self.min_btn = QPushButton("_", self.menuBar)
+        self.max_btn = QPushButton(self.menuBar)
+        self.min_btn = QPushButton(self.menuBar)
 
         self.oldPos = self.pos()
         self.screen = app.desktop()
-        self.width = 320
-        self.height = 480
+        self.width = 400
+        self.height = 600
         self.winX = int((self.screen.width() / 2) - (self.width / 2))
         self.winY = int((self.screen.height() / 2) - (self.height / 2))
         self.pressed = False
@@ -48,27 +48,33 @@ class App(QMainWindow):
         self.calcScreen.setFixedHeight(50)
         self.calcLayout.addWidget(self.calcScreen)
 
-        self.row1 = QHBoxLayout(self)
+        self.font_color = "#55D6BE"
 
+        self.row1 = QHBoxLayout(self)
+        button_height = 65
         self.percentBtn = QPushButton("%")
+        self.percentBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.percentBtn.clicked.connect(lambda: self.btnPush(self.percentBtn))
-        self.percentBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.percentBtn.setFixedHeight(40)
+        self.percentBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.percentBtn.setFixedHeight(button_height)
 
         self.clearEquBtn = QPushButton("CE")
+        self.clearEquBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.clearEquBtn.clicked.connect(lambda: self.btnPush(self.clearEquBtn))
-        self.clearEquBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.clearEquBtn.setFixedHeight(40)
+        self.clearEquBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.clearEquBtn.setFixedHeight(button_height)
 
         self.clearBtn = QPushButton("C")
+        self.clearBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.clearBtn.clicked.connect(lambda: self.btnPush(self.clearBtn))
-        self.clearBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.clearBtn.setFixedHeight(40)
+        self.clearBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.clearBtn.setFixedHeight(button_height)
 
         self.delBtn = QPushButton("⌫")
+        self.delBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.delBtn.clicked.connect(lambda: self.btnPush(self.delBtn))
-        self.delBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.delBtn.setFixedHeight(40)
+        self.delBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.delBtn.setFixedHeight(button_height)
 
         self.row1.addWidget(self.percentBtn)
         self.row1.addWidget(self.clearEquBtn)
@@ -80,24 +86,28 @@ class App(QMainWindow):
         self.row2 = QHBoxLayout(self)
 
         self.invertBtn = QPushButton("1/x")
+        self.invertBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.invertBtn.clicked.connect(lambda: self.btnPush(self.invertBtn))
-        self.invertBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.invertBtn.setFixedHeight(40)
+        self.invertBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.invertBtn.setFixedHeight(button_height)
 
         self.squareBtn = QPushButton("x²")
+        self.squareBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.squareBtn.clicked.connect(lambda: self.btnPush(self.squareBtn))
-        self.squareBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.squareBtn.setFixedHeight(40)
+        self.squareBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.squareBtn.setFixedHeight(button_height)
 
         self.rootBtn = QPushButton("²√x")
+        self.rootBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.rootBtn.clicked.connect(lambda: self.btnPush(self.rootBtn))
-        self.rootBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.rootBtn.setFixedHeight(40)
+        self.rootBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.rootBtn.setFixedHeight(button_height)
 
         self.divBtn = QPushButton("÷")
+        self.divBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.divBtn.clicked.connect(lambda: self.btnPush(self.divBtn))
-        self.divBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.divBtn.setFixedHeight(40)
+        self.divBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.divBtn.setFixedHeight(button_height)
 
         self.row2.addWidget(self.invertBtn)
         self.row2.addWidget(self.squareBtn)
@@ -109,24 +119,28 @@ class App(QMainWindow):
         self.row3 = QHBoxLayout(self)
 
         self.sevenBtn = QPushButton("7")
+        self.sevenBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.sevenBtn.clicked.connect(lambda: self.btnPush(self.sevenBtn))
-        self.sevenBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.sevenBtn.setFixedHeight(40)
+        self.sevenBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.sevenBtn.setFixedHeight(button_height)
 
         self.eightBtn = QPushButton("8")
+        self.eightBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.eightBtn.clicked.connect(lambda: self.btnPush(self.eightBtn))
-        self.eightBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.eightBtn.setFixedHeight(40)
+        self.eightBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.eightBtn.setFixedHeight(button_height)
 
         self.nineBtn = QPushButton("9")
+        self.nineBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.nineBtn.clicked.connect(lambda: self.btnPush(self.nineBtn))
-        self.nineBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.nineBtn.setFixedHeight(40)
+        self.nineBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.nineBtn.setFixedHeight(button_height)
 
         self.multBtn = QPushButton("×")
+        self.multBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.multBtn.clicked.connect(lambda: self.btnPush(self.multBtn))
-        self.multBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.multBtn.setFixedHeight(40)
+        self.multBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.multBtn.setFixedHeight(button_height)
 
         self.row3.addWidget(self.sevenBtn)
         self.row3.addWidget(self.eightBtn)
@@ -138,24 +152,28 @@ class App(QMainWindow):
         self.row4 = QHBoxLayout(self)
 
         self.fourBtn = QPushButton("4")
+        self.fourBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.fourBtn.clicked.connect(lambda: self.btnPush(self.fourBtn))
-        self.fourBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.fourBtn.setFixedHeight(40)
+        self.fourBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.fourBtn.setFixedHeight(button_height)
 
         self.fiveBtn = QPushButton("5")
+        self.fiveBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.fiveBtn.clicked.connect(lambda: self.btnPush(self.fiveBtn))
-        self.fiveBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.fiveBtn.setFixedHeight(40)
+        self.fiveBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.fiveBtn.setFixedHeight(button_height)
 
         self.sixBtn = QPushButton("6")
+        self.sixBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.sixBtn.clicked.connect(lambda: self.btnPush(self.sixBtn))
-        self.sixBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.sixBtn.setFixedHeight(40)
+        self.sixBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.sixBtn.setFixedHeight(button_height)
 
         self.subBtn = QPushButton("-")
+        self.subBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.subBtn.clicked.connect(lambda: self.btnPush(self.subBtn))
-        self.subBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.subBtn.setFixedHeight(40)
+        self.subBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.subBtn.setFixedHeight(button_height)
 
         self.row4.addWidget(self.fourBtn)
         self.row4.addWidget(self.fiveBtn)
@@ -167,24 +185,28 @@ class App(QMainWindow):
         self.row5 = QHBoxLayout(self)
 
         self.oneBtn = QPushButton("1")
+        self.oneBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.oneBtn.clicked.connect(lambda: self.btnPush(self.oneBtn))
-        self.oneBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.oneBtn.setFixedHeight(40)
+        self.oneBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.oneBtn.setFixedHeight(button_height)
 
         self.twoBtn = QPushButton("2")
+        self.twoBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.twoBtn.clicked.connect(lambda: self.btnPush(self.twoBtn))
-        self.twoBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.twoBtn.setFixedHeight(40)
+        self.twoBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.twoBtn.setFixedHeight(button_height)
 
         self.threeBtn = QPushButton("3")
+        self.threeBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.threeBtn.clicked.connect(lambda: self.btnPush(self.threeBtn))
-        self.threeBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.threeBtn.setFixedHeight(40)
+        self.threeBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.threeBtn.setFixedHeight(button_height)
 
         self.plusBtn = QPushButton("+")
+        self.plusBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.plusBtn.clicked.connect(lambda: self.btnPush(self.plusBtn))
-        self.plusBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.plusBtn.setFixedHeight(40)
+        self.plusBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.plusBtn.setFixedHeight(button_height)
 
         self.row5.addWidget(self.oneBtn)
         self.row5.addWidget(self.twoBtn)
@@ -196,24 +218,28 @@ class App(QMainWindow):
         self.row6 = QHBoxLayout(self)
 
         self.negBtn = QPushButton("+/-")
+        self.negBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.negBtn.clicked.connect(lambda: self.btnPush(self.negBtn))
-        self.negBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.negBtn.setFixedHeight(40)
+        self.negBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.negBtn.setFixedHeight(button_height)
 
         self.zeroBtn = QPushButton("0")
+        self.zeroBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.zeroBtn.clicked.connect(lambda: self.btnPush(self.zeroBtn))
-        self.zeroBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.zeroBtn.setFixedHeight(40)
+        self.zeroBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.zeroBtn.setFixedHeight(button_height)
 
         self.decBtn = QPushButton(".")
+        self.decBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.decBtn.clicked.connect(lambda: self.btnPush(self.decBtn))
-        self.decBtn.setStyleSheet("background-color: #222222; font-size: 20px; color: #2CF6B3;")
-        self.decBtn.setFixedHeight(40)
+        self.decBtn.setStyleSheet(f"background-color: #222222; font-size: 20px; color: {self.font_color};")
+        self.decBtn.setFixedHeight(button_height)
 
         self.equalBtn = QPushButton("=")
+        self.equalBtn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.equalBtn.clicked.connect(lambda: self.btnPush(self.equalBtn))
-        self.equalBtn.setStyleSheet("background-color: #444444; font-size: 20px; color: #2CF6B3;")
-        self.equalBtn.setFixedHeight(40)
+        self.equalBtn.setStyleSheet(f"background-color: #444444; font-size: 20px; color: {self.font_color};")
+        self.equalBtn.setFixedHeight(button_height)
 
         self.row6.addWidget(self.negBtn)
         self.row6.addWidget(self.zeroBtn)
@@ -239,14 +265,22 @@ class App(QMainWindow):
         self.windowControlLayout.addWidget(self.max_btn)
         self.windowControlLayout.addWidget(self.close_btn)
 
-        self.min_btn.setStyleSheet("width: 20px; height:20px;")
+        self.min_btn.setStyleSheet("width: 30px; height:20px; border: none;")
+        self.min_btn.setIcon(qta.icon('fa5s.window-minimize', color=self.font_color))
+        self.min_btn.setIconSize(QSize(20, 20))
+        self.min_btn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.min_btn.clicked.connect(self.minButton)
 
-        self.max_btn.setStyleSheet("width: 20px; height:20px;")
+        self.max_btn.setStyleSheet("width: 30px; height:20px; border: none;")
+        self.max_btn.setIcon(qta.icon('fa5s.window-maximize', color=self.font_color))
+        self.max_btn.setIconSize(QSize(20, 20))
+        self.max_btn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.max_btn.clicked.connect(self.maxButton)
 
-        self.close_btn.setIcon(self.style().standardIcon(getattr(QStyle, 'SP_MessageBoxCritical')))
-        self.close_btn.setStyleSheet("width: 20px; height:20px;")
+        self.close_btn.setStyleSheet("width: 30px; height:20px; border: none;")
+        self.close_btn.setIcon(qta.icon('fa5s.times', color=self.font_color))
+        self.close_btn.setIconSize(QSize(20, 20))
+        self.close_btn.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.close_btn.clicked.connect(self.closeButton)
 
         self.setWindowFlags(Qt.FramelessWindowHint)
