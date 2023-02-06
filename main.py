@@ -39,13 +39,13 @@ class App(QMainWindow):
 
         self.formula = QLabel("")
         self.formula.setAlignment(Qt.AlignRight)
-        self.formula.setStyleSheet("color: #cccccc; font-size: 12px;")
+        self.formula.setStyleSheet("color: #cccccc; font-size: 16px;")
         self.calcLayout.addWidget(self.formula)
 
         self.calcScreen = QLabel("0")
         self.calcScreen.setAlignment(Qt.AlignRight)
-        self.calcScreen.setStyleSheet("color: #ffffff; font-size: 30px;")
-        self.calcScreen.setFixedHeight(50)
+        self.calcScreen.setStyleSheet("color: #ffffff; font-size: 50px")
+        self.calcScreen.setFixedHeight(60)
         self.calcLayout.addWidget(self.calcScreen)
 
         self.font_color = "#55D6BE"
