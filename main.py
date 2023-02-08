@@ -381,7 +381,7 @@ class App(QMainWindow):
         result = str(eval(formula))
         if result[-2:] == ".0":
             result = result[:-2]
-        self.calcScreen.setText(result)
+        self.calcScreen.setText(result[:12])
 
     def mousePressEvent(self, event):
         self.oldPos = event.globalPos()
