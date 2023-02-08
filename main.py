@@ -291,13 +291,11 @@ class App(QMainWindow):
     def btnPush(self, btn):
         if btn.text() == "%":
             if "." not in self.calcScreen.text():
-                #self.formula.setText(f"{self.formula.text()} 0.{self.calcScreen.text()}")
                 self.calcScreen.setText("0." + self.calcScreen.text())
             else:
                 new_text = str(float(self.calcScreen.text())/(int(self.calcScreen.text().index(".")) * 10))
                 if len(new_text) > 12:
                     new_text = new_text[:12]
-                #self.formula.setText(f"{self.formula.text()} {new_text}")
                 self.calcScreen.setText(new_text)
 
         if btn.text() == "CE":
