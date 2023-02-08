@@ -290,8 +290,14 @@ class App(QMainWindow):
 
     def btnPush(self, btn):
         if btn.text() == "%":
-            self.formula.setText(f"{self.formula.text()} 0.{self.calcScreen.text()}")
-            self.calcScreen.setText("0." + self.calcScreen.text())
+            if "." not in self.calcScreen.text():
+                self.formula.setText(f"{self.formula.text()} 0.{self.calcScreen.text()}")
+                self.calcScreen.setText("0." + self.calcScreen.text())
+            else:
+                new_text = str(float(self.calcScreen.text())/(int(self.calcScreen.text().index(".")) * 10))
+                if len(new_text) > 12:
+                    new_text = new_text[:12]
+                self.calcScreen.setText(new_text)
 
         if btn.text() == "CE":
             self.calcScreen.setText("0")
@@ -321,6 +327,8 @@ class App(QMainWindow):
             result = str(math.sqrt(int(self.calcScreen.text())))
             if result[-2:] == ".0":
                 result = result[:-2]
+            if len(result) > 12:
+                result = result[:12]
             self.calcScreen.setText(result)
 
         if btn.text() == "÷":
@@ -355,6 +363,10 @@ class App(QMainWindow):
                 self.calcScreen.setText("-" + self.calcScreen.text())
                 self.isNeg = True
 
+        if btn.text() == ".":
+            if "." not in self.calcScreen.text():
+                self.calcScreen.setText(self.calcScreen.text()+".")
+
         if btn.text().isnumeric():
             if self.calcScreen.text() == "0" or self.calcScreen.text() == "-0" or self.result:
                 if self.isNeg:
@@ -363,7 +375,8 @@ class App(QMainWindow):
                     self.calcScreen.setText(btn.text())
                 self.result = False
             else:
-                self.calcScreen.setText(self.calcScreen.text() + btn.text())
+                if len(self.calcScreen.text()) < 12:
+                    self.calcScreen.setText(self.calcScreen.text() + btn.text())
 
     def calculate(self):
         formula = self.formula.text().replace(" ", "").replace("÷", "/").replace("×", "*")[:-1]
