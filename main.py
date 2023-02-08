@@ -291,12 +291,11 @@ class App(QMainWindow):
     def btnPush(self, btn):
         if btn.text() == "%":
             if "." not in self.calcScreen.text():
-                self.calcScreen.setText("0." + self.calcScreen.text())
+                new_text = "0." + self.calcScreen.text()
+                self.calcScreen.setText(new_text[:12])
             else:
                 new_text = str(float(self.calcScreen.text())/(int(self.calcScreen.text().index(".")) * 10))
-                if len(new_text) > 12:
-                    new_text = new_text[:12]
-                self.calcScreen.setText(new_text)
+                self.calcScreen.setText(new_text[:12])
 
         if btn.text() == "CE":
             self.calcScreen.setText("0")
@@ -315,20 +314,20 @@ class App(QMainWindow):
 
         if btn.text() == "1/x":
             self.formula.setText(f"1/({self.calcScreen.text()})")
-            self.calcScreen.setText(str(eval(f"1/{self.calcScreen.text()}")))
+            new_text = str(eval(f"1/{self.calcScreen.text()}"))
+            self.calcScreen.setText(new_text[:12])
 
         if btn.text() == "x²":
             self.formula.setText(f"sqr({self.calcScreen.text()})")
-            self.calcScreen.setText(str(eval(f"{self.calcScreen.text()}*{self.calcScreen.text()}")))
+            new_text = str(eval(f"{self.calcScreen.text()}*{self.calcScreen.text()}"))
+            self.calcScreen.setText(new_text[:12])
 
         if btn.text() == "²√x":
             self.formula.setText(f"√({self.calcScreen.text()})")
-            result = str(math.sqrt(int(self.calcScreen.text())))
+            result = str(math.sqrt(float(self.calcScreen.text())))
             if result[-2:] == ".0":
                 result = result[:-2]
-            if len(result) > 12:
-                result = result[:12]
-            self.calcScreen.setText(result)
+            self.calcScreen.setText(result[:12])
 
         if btn.text() == "÷":
             self.formula.setText(self.formula.text() + self.calcScreen.text() + " ÷ ")
