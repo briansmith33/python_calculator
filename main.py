@@ -295,10 +295,12 @@ class App(QMainWindow):
 
         if btn.text() == "CE":
             self.calcScreen.setText("0")
+            self.isNeg = False
 
         if btn.text() == "C":
             self.formula.setText("")
             self.calcScreen.setText("0")
+            self.isNeg = False
 
         if btn.text() == "⌫" and self.calcScreen.text() != "0":
             if len(self.calcScreen.text()) == 1:
@@ -347,15 +349,18 @@ class App(QMainWindow):
 
         if btn.text() == "+/-":
             if self.isNeg:
-                self.calcScreen.setText(self.calcScreen.text()[1:])
+                self.calcScreen.setText(self.calcScreen.text().replace('-', ''))
                 self.isNeg = False
             else:
                 self.calcScreen.setText("-" + self.calcScreen.text())
                 self.isNeg = True
 
         if btn.text().isnumeric():
-            if self.calcScreen.text() == "0" or self.result:
-                self.calcScreen.setText(btn.text())
+            if self.calcScreen.text() == "0" or self.calcScreen.text() == "-0" or self.result:
+                if self.isNeg:
+                    self.calcScreen.setText("-"+btn.text())
+                else:
+                    self.calcScreen.setText(btn.text())
                 self.result = False
             else:
                 self.calcScreen.setText(self.calcScreen.text() + btn.text())
